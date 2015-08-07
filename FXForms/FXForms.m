@@ -3546,7 +3546,7 @@ static void FXFormPreprocessFieldDictionary(NSMutableDictionary *dictionary)
         }
     }
     
-    if ([UIImagePickerController isSourceTypeAvailable:sourceType])
+    if (buttonIndex != 2 && [UIImagePickerController isSourceTypeAvailable:sourceType])
     {
         self.imagePickerController.sourceType = sourceType;
         [self.controller presentViewController:self.imagePickerController animated:YES completion:nil];
