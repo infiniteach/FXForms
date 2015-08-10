@@ -3403,7 +3403,7 @@ static void FXFormPreprocessFieldDictionary(NSMutableDictionary *dictionary)
 @end
 
 
-@interface FXFormImagePickerCell () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
+@interface FXFormImagePickerCell () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIPopoverControllerDelegate, UIPopoverPresentationControllerDelegate>
 
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, weak) UIViewController *controller;
@@ -3481,6 +3481,14 @@ static void FXFormPreprocessFieldDictionary(NSMutableDictionary *dictionary)
     return (UIImageView *)self.accessoryView;
 }
 
+- (UIPopoverController *)popoverController {
+    if (!_popoverController) {
+        _popoverController = [[UIPopoverController alloc] initWithContentViewController:self.imagePickerController];
+        _popoverController.delegate = self;
+    }
+    return _popoverController;
+}
+
 - (void)didSelectWithTableView:(UITableView *)tableView controller:(UIViewController *)controller
 {
     [FXFormsFirstResponder(tableView) resignFirstResponder];
@@ -3519,13 +3527,17 @@ static void FXFormPreprocessFieldDictionary(NSMutableDictionary *dictionary)
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:NULL];
+    [self.popoverController dismissPopoverAnimated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     self.field.value = info[UIImagePickerControllerEditedImage] ?: info[UIImagePickerControllerOriginalImage];
     [picker dismissViewControllerAnimated:YES completion:NULL];
+    [self.popoverController dismissPopoverAnimated:YES];
     if (self.field.action) self.field.action(self);
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [self update];
 }
 
@@ -3549,9 +3561,20 @@ static void FXFormPreprocessFieldDictionary(NSMutableDictionary *dictionary)
     if (buttonIndex != 2 && [UIImagePickerController isSourceTypeAvailable:sourceType])
     {
         self.imagePickerController.sourceType = sourceType;
-        [self.controller presentViewController:self.imagePickerController animated:YES completion:nil];
+        if (sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+            [self.popoverController presentPopoverFromRect:self.imagePickerView.frame
+                                                    inView:self.controller.view
+                                  permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                  animated:YES];
+        } else {
+            [self.controller presentViewController:self.imagePickerController animated:YES completion:nil];
+        }
     }
     self.controller = nil;
+}
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
 @end
