@@ -3562,6 +3562,9 @@ static void FXFormPreprocessFieldDictionary(NSMutableDictionary *dictionary)
     {
         self.imagePickerController.sourceType = sourceType;
         if (sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+            if ([self.imagePickerController respondsToSelector:@selector(popoverPresentationController)]) {
+                self.imagePickerController.popoverPresentationController.sourceView = self.imagePickerView;
+            }
             [self.popoverController presentPopoverFromRect:self.imagePickerView.frame
                                                     inView:self.controller.view
                                   permittedArrowDirections:UIPopoverArrowDirectionAny
