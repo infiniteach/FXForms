@@ -3344,6 +3344,10 @@ static void FXFormPreprocessFieldDictionary(NSMutableDictionary *dictionary)
 - (void)setUp
 {
     self.datePicker = [[UIDatePicker alloc] init];
+    if ([self.datePicker respondsToSelector:@selector(setBackgroundColor:)]) {
+        [self.datePicker setBackgroundColor:[UIColor whiteColor]];
+    }
+    
     [self.datePicker addTarget:self action:@selector(valueChanged) forControlEvents:UIControlEventValueChanged];
 }
 
