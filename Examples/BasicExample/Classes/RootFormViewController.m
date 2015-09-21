@@ -35,6 +35,8 @@
                                delegate:nil
                       cancelButtonTitle:nil
                       otherButtonTitles:@"OK", nil] show];
+	
+	NSLog(@"%@",((RootForm *)self.formController.form).startDate);
 }
 
 - (void)submitRegistrationForm:(UITableViewCell<FXFormFieldCell> *)cell

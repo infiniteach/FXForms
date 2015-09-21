@@ -13,7 +13,8 @@
 
 
 @interface RootForm : NSObject <FXForm>
-
+@property (nonatomic, strong) NSDate *startDate;
+@property (nonatomic, strong) NSDate *endDate;
 @property (nonatomic, strong) LoginForm *login;
 @property (nonatomic, strong) RegistrationForm *registration;
 

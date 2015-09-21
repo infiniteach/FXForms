@@ -75,6 +75,7 @@ UIKIT_EXTERN NSString *const FXFormFieldTypeDate; //date
 UIKIT_EXTERN NSString *const FXFormFieldTypeTime; //time
 UIKIT_EXTERN NSString *const FXFormFieldTypeDateTime; //datetime
 UIKIT_EXTERN NSString *const FXFormFieldTypeImage; //image
+UIKIT_EXTERN NSString *const FXFormFieldTypeInlinePicker; // Inline picker for Private
 
 
 #pragma mark -
@@ -125,6 +126,7 @@ UIKIT_EXTERN NSString *const FXFormFieldTypeImage; //image
 - (NSString *)optionDescriptionAtIndex:(NSUInteger)index;
 - (void)setOptionSelected:(BOOL)selected atIndex:(NSUInteger)index;
 - (BOOL)isOptionSelectedAtIndex:(NSUInteger)index;
+- (BOOL)isInlinePickerType;
 
 @end
 
@@ -277,6 +279,11 @@ UIKIT_EXTERN NSString *const FXFormFieldTypeImage; //image
 
 @end
 
+@interface FXFormInlinePickerCell : FXFormBaseCell;
+
+@property (nonatomic, readonly) UIDatePicker *datePicker;
+
+@end
 
 #pragma clang diagnostic pop
 

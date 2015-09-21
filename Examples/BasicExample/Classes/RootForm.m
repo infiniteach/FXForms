@@ -15,6 +15,25 @@
 //of in a separate view controller, so by implementing
 //the <propertyName>Field method, we can specify that
 
+
+- (NSDictionary *)startDateField
+{
+	
+	return @{
+			 FXFormFieldInline: @YES,
+			 FXFormFieldType: FXFormFieldTypeDate
+			 };
+}
+
+- (NSDictionary *)endDateField
+{
+	
+	return @{
+			 FXFormFieldInline: @YES,
+			 FXFormFieldType: FXFormFieldTypeDate
+			 };
+}
+
 - (NSDictionary *)loginField
 {
     return @{FXFormFieldInline: @YES};
