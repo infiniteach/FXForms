@@ -3629,6 +3629,23 @@ static void FXFormPreprocessFieldDictionary(NSMutableDictionary *dictionary)
     [self update];
 }
 
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
+
+- (BOOL)prefersStatusBarHidden {
+// iOS8 definitely needs this one. checked.
+    
+    return YES;
+}
+
+- (UIViewController *)childViewControllerForStatusBarHidden {
+    
+    return nil;
+}
+
 - (void)actionSheet:(__unused UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
