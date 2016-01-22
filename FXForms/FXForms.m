@@ -3369,7 +3369,6 @@ static void FXFormPreprocessFieldDictionary(NSMutableDictionary *dictionary)
     }
 
     [self.datePicker addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-    //[self.datePicker addTarget:self action:@selector(valueChanged) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)update
@@ -3700,6 +3699,10 @@ static void FXFormPreprocessFieldDictionary(NSMutableDictionary *dictionary)
 - (void)setUp
 {
     self.pickerView = [[UIPickerView alloc] init];
+    if ([self.pickerView respondsToSelector:@selector(setBackgroundColor:)]) {
+        [self.pickerView setBackgroundColor:[UIColor whiteColor]];
+    }
+
     self.pickerView.dataSource = self;
     self.pickerView.delegate = self;
 }
